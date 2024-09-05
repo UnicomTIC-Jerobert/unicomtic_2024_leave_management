@@ -38,6 +38,7 @@
   "leaveRequests": [
     {
       "id": "e491",
+      "employeeId": "EMP_Dy4kP",
       "reason": "trip",
       "dateFrom": "2024-09-12",
       "numOfDays": "2",
@@ -46,14 +47,33 @@
       "processedDate": "2024-09-05"
     },
     {
+      "id": "e492",
+      "employeeId": "EMP_Dy4kP",
+      "reason": "tour",
+      "dateFrom": "2024-09-30",
+      "numOfDays": "2",
+      "applicationDate": "2024-09-15",
+      "status": "Pending"
+    },
+    {
       "id": "a86b",
       "reason": "party",
+      "employeeId": "EMP_4SK8Q",
       "dateFrom": "2024-09-17",
       "numOfDays": "1",
       "applicationDate": "2024-09-06",
       "status": "Rejected",
       "processedDate": "2024-09-05",
       "rejectionReason": "cant allow"
+    },
+    {
+      "id": "97ca",
+      "employeeId": "EMP_Dy4kP",
+      "reason": "party",
+      "dateFrom": "2024-09-09",
+      "numOfDays": "2",
+      "applicationDate": "2024-09-02",
+      "status": "Pending"
     }
   ]
 }

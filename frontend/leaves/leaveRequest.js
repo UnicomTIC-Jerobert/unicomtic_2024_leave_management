@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async function() {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
+
     if (!loggedInUser) {
         alert('You must log in first!');
         window.location.href = 'login.html';
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         const newLeaveRequest = {
-            employeeId: loggedInUser.empId,
+            employeeId: loggedInUser.employeeId,
             reason,
             dateFrom,
             numOfDays,
@@ -90,5 +91,5 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     }
 
-    loadLeaveRequests(loggedInUser.empId);
+    loadLeaveRequests(loggedInUser.employeeId);
 });
