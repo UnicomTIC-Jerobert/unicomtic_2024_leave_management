@@ -74,6 +74,24 @@
       "numOfDays": "2",
       "applicationDate": "2024-09-02",
       "status": "Pending"
+    },
+    {
+      "id": "18cb",
+      "employeeId": "EMP_4SK8Q",
+      "reason": "sick",
+      "dateFrom": "2024-09-10",
+      "numOfDays": "1",
+      "applicationDate": "2024-09-02",
+      "status": "Pending"
+    },
+    {
+      "id": "ccda",
+      "employeeId": "EMP_4SK8Q",
+      "reason": "test",
+      "dateFrom": "2024-09-11",
+      "numOfDays": "1",
+      "applicationDate": "2024-09-09",
+      "status": "Pending"
     }
   ]
 }
