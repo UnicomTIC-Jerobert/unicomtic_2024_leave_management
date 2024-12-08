@@ -62,13 +62,26 @@ const server = http.createServer(async (req, res) => {
     let filePath = "./views/index.html";
     let layout_use = "./layouts/layout_with_topnav.html";
 
+
+
     if (req.url === "/") {
         filePath = "./views/index.html";
         layout_use = "./layouts/layout_with_topnav.html";
     } else if (req.url === "/employees") {
         filePath = "./views/employees/index.html";
         layout_use = "./layouts/layout_with_topnav.html";
-    } else {
+    } else if (req.url === "/applyleave") {
+        filePath = "./views/leaves/leaveRequest.html";
+        layout_use = "./layouts/layout_with_topnav.html";
+    } else if (req.url === "/manageleave") {
+        filePath = "./views/leaves/managerLeaveManagement.html";
+        layout_use = "./layouts/layout_with_topnav.html";
+    }
+    else if (req.url === "/login") {
+        filePath = "./views/auth/login.html";
+        layout_use = "./layouts/layout_auth.html";
+    }
+    else {
         res.writeHead(404, { "Content-Type": "text/html" });
         return res.end("<h1>404 Not Found</h1>");
     }

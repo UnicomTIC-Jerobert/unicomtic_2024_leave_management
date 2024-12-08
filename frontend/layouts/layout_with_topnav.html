@@ -14,22 +14,49 @@
         <div class="navbar-left">
             <a href="/" class="company-name">UnicomTIC</a>
         </div>
+        <div class="navbar-middle">
+            <h2 id="welcomeMessage">test welcome</h2>
+        </div>
         <div class="navbar-right">
             <a href="/employees" class="menu-item">Employee</a>
             <div class="dropdown">
                 <button class="dropbtn">Leave Management</button>
                 <div class="dropdown-content">
-                    <a href="#">Apply Leave</a>
-                    <a href="#">Manage Leave</a>
+                    <a href="/applyleave">Apply Leave</a>
+                    <a href="/manageleave">Manage Leave</a>
                 </div>
             </div>
+            <button id="logoutButton" class="btn-logout">Logout</button>
         </div>
+
+
     </nav>
 
     <main>
         {{content}}
     </main>
 
+    <script>
+        // const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+
+        // if (!loggedInUser) {
+        //     alert('You must log in first!');
+        //     window.location.href = 'login.html';
+        //     return;
+        // }
+
+        // Display welcome message
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        welcomeMessage.textContent = `Welcome, ${loggedInUser.firstName} ${loggedInUser.lastName}`;
+        // Logout button functionality
+        const logoutButton = document.getElementById('logoutButton');
+        logoutButton.addEventListener('click', function () {
+            localStorage.removeItem('loggedInUser');
+            alert('You have been logged out.');
+            window.location.href = 'login.html';
+        });
+    </script>
     {{script}}
 </body>
 

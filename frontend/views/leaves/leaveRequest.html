@@ -1,38 +1,143 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leave Request</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h2 id="welcomeMessage"></h2>
-            <button id="logoutButton" class="btn-logout">Logout</button>
-        </div>
-        <h2>Submit Leave Request</h2>
-        <form id="leaveRequestForm" class="form">
-            <label for="reason">Reason:</label>
-            <input type="text" id="reason" name="reason" required><br><br>
+<style>
+    .leave-list {
+        list-style-type: none;
+        padding: 0;
+    }
 
-            <label for="dateFrom">From:</label>
-            <input type="date" id="dateFrom" name="dateFrom" required><br><br>
+    .leave-list li {
+        background-color: #e9ecef;
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 4px;
+        font-size: 14px;
+    }
 
-            <label for="numOfDays">Number of Days:</label>
-            <input type="number" id="numOfDays" name="numOfDays" required><br><br>
 
-            <label for="applicationDate">Application Date:</label>
-            <input type="date" id="applicationDate" name="applicationDate" required><br><br>
+    .leave-item {
+        padding: 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        border-radius: 4px;
+    }
 
-            <button type="submit" class="btn">Submit</button>
-        </form>
+    .status {
+        font-weight: bold;
+    }
 
-        <h3>Your Leave Requests</h3>
-        <ul id="leaveRequests" class="leave-list"></ul>
-    </div>
+    .status.pending {
+        color: #f0ad4e;
+    }
 
-    <script src="leaveRequest.js"></script>
-</body>
-</html>
+    .status.approved {
+        color: #5cb85c;
+    }
+
+    .status.rejected {
+        color: #d9534f;
+    }
+</style>
+<div class="container">
+   
+    <h2>Submit Leave Request</h2>
+    <form id="leaveRequestForm" class="form">
+        <label for="reason">Reason:</label>
+        <input type="text" id="reason" name="reason" required><br><br>
+
+        <label for="dateFrom">From:</label>
+        <input type="date" id="dateFrom" name="dateFrom" required><br><br>
+
+        <label for="numOfDays">Number of Days:</label>
+        <input type="number" id="numOfDays" name="numOfDays" required><br><br>
+
+        <label for="applicationDate">Application Date:</label>
+        <input type="date" id="applicationDate" name="applicationDate" required><br><br>
+
+        <button type="submit" class="btn">Submit</button>
+    </form>
+
+    <h3>Your Leave Requests</h3>
+    <ul id="leaveRequests" class="leave-list"></ul>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        
+
+       
+
+        const leaveRequestForm = document.getElementById('leaveRequestForm');
+        const leaveRequestsList = document.getElementById('leaveRequests');
+
+        leaveRequestForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const reason = document.getElementById('reason').value;
+            const dateFrom = document.getElementById('dateFrom').value;
+            const numOfDays = document.getElementById('numOfDays').value;
+            const applicationDate = document.getElementById('applicationDate').value;
+
+            // Validate that application date is less than dateFrom
+            if (new Date(applicationDate) >= new Date(dateFrom)) {
+                alert('Application date must be earlier than the leave start date.');
+                return;
+            }
+
+            const newLeaveRequest = {
+                employeeId: loggedInUser.employeeId,
+                reason,
+                dateFrom,
+                numOfDays,
+                applicationDate, // Use the selected application date
+                status: 'Pending' // Initial status
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/leaveRequests', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newLeaveRequest)
+                });
+
+                if (response.ok) {
+                    alert('Leave request submitted successfully!');
+                    leaveRequestForm.reset();
+                    loadLeaveRequests(loggedInUser.employeeId);
+                } else {
+                    alert('Failed to submit leave request.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the leave request.');
+            }
+        });
+
+        async function loadLeaveRequests(employeeId) {
+            try {
+                const response = await fetch(`http://localhost:3000/leaveRequests?employeeId=${employeeId}`);
+                const leaveRequests = await response.json();
+
+                leaveRequestsList.innerHTML = '';
+                leaveRequests.forEach(request => {
+                    const li = document.createElement('li');
+                    li.classList.add('leave-item'); // Add a class for styling
+                    li.innerHTML = `
+                    <div>Reason: ${request.reason}</div>
+                    <div>From: ${request.dateFrom}</div>
+                    <div>Days: ${request.numOfDays}</div>
+                    <div>Applied on: ${request.applicationDate}</div>
+                    <div>Status: <span class="status ${request.status.toLowerCase()}">${request.status}</span></div>
+                `;
+                    leaveRequestsList.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        loadLeaveRequests(loggedInUser.employeeId);
+    });
+
+</script>
