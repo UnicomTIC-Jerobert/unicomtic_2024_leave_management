@@ -1,4 +1,10 @@
 <style>
+    #employeeSection header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
 
     #searchInput {
         width: 100%;
@@ -121,12 +127,12 @@
     }
 </style>
 
-<div class="container">
-    <div class="flex-container">
-        <h1 class="text-center">Employee Management</h1>
+<section class="container" id="employeeSection">
+    <header>
+        <h1>Employee Management</h1>
         <!-- Add Employee Button -->
         <button id="createEmployeeBtn">Add Employee</button>
-    </div>
+    </header>
     <!-- Search Input -->
     <input type="text" id="searchInput" placeholder="Search by NIC, First Name, Last
 Name..." style="margin-top: 10px;">
@@ -207,7 +213,7 @@ Name..." style="margin-top: 10px;">
             </form>
         </div>
     </div>
-</div>
+</section>
 
 <script>
     document.addEventListener("DOMContentLoaded", async () => {
